@@ -29,13 +29,13 @@
             border: 2px solid var(--rosa-pastel);
         }
         h2 { text-align: center; color: var(--rosa-fuerte); margin-bottom: 20px; font-size: 26px; }
-        h3 { color: var(--rosa-fuerte); font-size: 16px; border-bottom: 1px solid var(--rosa-pastel); margin-top: 15px; }
+        h3 { color: var(--rosa-fuerte); font-size: 16px; border-bottom: 1px solid var(--rosa-pastel); margin-top: 15px; padding-bottom: 5px; }
 
         .item-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px dashed #eee;
         }
         .item-info { flex-grow: 1; font-size: 14px; }
@@ -51,14 +51,18 @@
             color: white;
             border: none;
             border-radius: 8px;
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             cursor: pointer;
             font-weight: bold;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
         }
         .btn:hover { background-color: var(--rosa-fuerte); }
-        .count { width: 20px; text-align: center; font-weight: bold; color: var(--rosa-fuerte); }
+        .count { width: 25px; text-align: center; font-weight: bold; color: var(--rosa-fuerte); font-size: 16px; }
 
         .total-box {
             background-color: var(--rosa-pastel);
@@ -68,16 +72,27 @@
             margin-top: 25px;
             position: sticky;
             bottom: 0;
+            border: 2px solid white;
         }
         .total-price { font-size: 32px; font-weight: bold; color: var(--rosa-fuerte); }
+        .reset-btn {
+            margin-top: 10px;
+            background: none;
+            border: 1px solid var(--rosa-fuerte);
+            color: var(--rosa-fuerte);
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>🎀 Paperetta Calculadora 🎀</h2>
+    <h2>🎀 Paperetta calculadora 🎀</h2>
 
-    <h3>✂️ Cortes (por unidad)</h3>
+    <h3>✂️ Cortes</h3>
     <div id="cortes-list"></div>
 
     <h3>📄 Hojas de Papel</h3>
@@ -92,6 +107,7 @@
     <div class="total-box">
         <div>Total Estimado:</div>
         <div class="total-price" id="total">$0.00</div>
+        <button class="reset-btn" onclick="resetear()">Limpiar calculadora</button>
     </div>
 </div>
 
@@ -104,10 +120,14 @@
         { id: 'c4', cat: 'cortes', nom: 'Guillotina: Simple', precio: 2.50 },
         { id: 'c5', cat: 'cortes', nom: 'Tijera: Simple', precio: 3.50 },
         { id: 'c6', cat: 'cortes', nom: 'Tijera: Detalle/Curvas', precio: 8.00 },
-        // Hojas
-        { id: 'h1', cat: 'hojas', nom: 'Papel Fotográfico', precio: 4.00 },
-        { id: 'h2', cat: 'hojas', nom: 'Opalina', precio: 2.70 },
-        { id: 'h3', cat: 'hojas', nom: 'Vinil Imprimible', precio: 5.00 },
+        // Hojas Completas
+        { id: 'h1', cat: 'hojas', nom: 'Hoja Fotográfica', precio: 4.00 },
+        { id: 'h2', cat: 'hojas', nom: 'Hoja Opalina', precio: 2.70 },
+        { id: 'h3', cat: 'hojas', nom: 'Hoja Vinil Imprimible', precio: 5.00 },
+        // MEDIAS HOJAS (Precios / 2)
+        { id: 'hm1', cat: 'hojas', nom: '½ Hoja Fotográfica', precio: 2.00 },
+        { id: 'hm2', cat: 'hojas', nom: '½ Hoja Opalina', precio: 1.35 },
+        { id: 'hm3', cat: 'hojas', nom: '½ Hoja Vinil Imprimible', precio: 2.50 },
         // Diseño e Impresión
         { id: 'd1', cat: 'otros', nom: 'Impresión B/N', precio: 0.104 },
         { id: 'd2', cat: 'otros', nom: 'Color Ligero', precio: 0.31 },
@@ -123,12 +143,10 @@
         { id: 'e4', cat: 'extras', nom: 'Desgaste', precio: 2.50 }
     ];
 
-    const carrito = {};
+    let carrito = {};
 
     function render() {
         const cats = { cortes: 'cortes-list', hojas: 'hojas-list', otros: 'otros-list', extras: 'extras-list' };
-        
-        // Limpiar contenedores
         Object.values(cats).forEach(id => document.getElementById(id).innerHTML = '');
 
         servicios.forEach(s => {
@@ -165,8 +183,14 @@
         document.getElementById('total').innerText = '$' + total.toFixed(2);
     }
 
+    function resetear() {
+        carrito = {};
+        render();
+    }
+
     render();
 </script>
 
 </body>
 </html>
+
