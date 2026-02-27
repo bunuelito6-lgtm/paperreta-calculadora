@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Paperetta Pro</title>
+    <style>
+        :root {
+            --rosa-pastel: #ffe4e1;
+            --rosa-fuerte: #ff85a2;
+            --rosa-boton: #ffb7c5;
+            --texto: #5d5d5d;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fffafa;
+            color: var(--texto);
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.15);
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid var(--rosa-pastel);
+        }
+        h2 { text-align: center; color: var(--rosa-fuerte); margin-bottom: 20px; font-size: 26px; }
+        h3 { color: var(--rosa-fuerte); font-size: 16px; border-bottom: 1px solid var(--rosa-pastel); margin-top: 15px; }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .item-info { flex-grow: 1; font-size: 14px; }
+        .item-price { font-size: 12px; color: #aaa; }
+        
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn {
+            background-color: var(--rosa-boton);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: var(--rosa-fuerte); }
+        .count { width: 20px; text-align: center; font-weight: bold; color: var(--rosa-fuerte); }
+
+        .total-box {
+            background-color: var(--rosa-pastel);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 25px;
+            position: sticky;
+            bottom: 0;
+        }
+        .total-price { font-size: 32px; font-weight: bold; color: var(--rosa-fuerte); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎀 Paperetta Calculadora 🎀</h2>
+
+    <h3>✂️ Cortes (por unidad)</h3>
+    <div id="cortes-list"></div>
+
+    <h3>📄 Hojas de Papel</h3>
+    <div id="hojas-list"></div>
+
+    <h3>🎨 Diseño e Impresión</h3>
+    <div id="otros-list"></div>
+
+    <h3>✨ Extras</h3>
+    <div id="extras-list"></div>
+
+    <div class="total-box">
+        <div>Total Estimado:</div>
+        <div class="total-price" id="total">$0.00</div>
+    </div>
+</div>
+
+<script>
+    const servicios = [
+        // Cortes
+        { id: 'c1', cat: 'cortes', nom: 'Cricut: Sencillo', precio: 4.50 },
+        { id: 'c2', cat: 'cortes', nom: 'Cricut: Intermedio', precio: 10.00 },
+        { id: 'c3', cat: 'cortes', nom: 'Cricut: Detallado', precio: 22.50 },
+        { id: 'c4', cat: 'cortes', nom: 'Guillotina: Simple', precio: 2.50 },
+        { id: 'c5', cat: 'cortes', nom: 'Tijera: Simple', precio: 3.50 },
+        { id: 'c6', cat: 'cortes', nom: 'Tijera: Detalle/Curvas', precio: 8.00 },
+        // Hojas
+        { id: 'h1', cat: 'hojas', nom: 'Papel Fotográfico', precio: 4.00 },
+        { id: 'h2', cat: 'hojas', nom: 'Opalina', precio: 2.70 },
+        { id: 'h3', cat: 'hojas', nom: 'Vinil Imprimible', precio: 5.00 },
+        // Diseño e Impresión
+        { id: 'd1', cat: 'otros', nom: 'Impresión B/N', precio: 0.104 },
+        { id: 'd2', cat: 'otros', nom: 'Color Ligero', precio: 0.31 },
+        { id: 'd3', cat: 'otros', nom: 'Color Intenso', precio: 0.82 },
+        { id: 'd4', cat: 'otros', nom: 'Diseño: Cambios mín.', precio: 4.00 },
+        { id: 'd5', cat: 'otros', nom: 'Diseño: Ajuste ligero', precio: 7.50 },
+        { id: 'd6', cat: 'otros', nom: 'Diseño desde Cero', precio: 35.00 },
+        { id: 'd7', cat: 'otros', nom: 'Diseño del Cliente', precio: 15.50 },
+        // Extras
+        { id: 'e1', cat: 'extras', nom: 'Empaque Básico', precio: 3.00 },
+        { id: 'e2', cat: 'extras', nom: 'Empaque Especial', precio: 7.50 },
+        { id: 'e3', cat: 'extras', nom: 'Merma', precio: 2.50 },
+        { id: 'e4', cat: 'extras', nom: 'Desgaste', precio: 2.50 }
+    ];
+
+    const carrito = {};
+
+    function render() {
+        const cats = { cortes: 'cortes-list', hojas: 'hojas-list', otros: 'otros-list', extras: 'extras-list' };
+        
+        // Limpiar contenedores
+        Object.values(cats).forEach(id => document.getElementById(id).innerHTML = '');
+
+        servicios.forEach(s => {
+            const qty = carrito[s.id] || 0;
+            const html = `
+                <div class="item-row">
+                    <div class="item-info">
+                        ${s.nom} <br>
+                        <span class="item-price">$${s.precio.toFixed(2)}</span>
+                    </div>
+                    <div class="controls">
+                        <button class="btn" onclick="update('${s.id}', -1)">-</button>
+                        <span class="count">${qty}</span>
+                        <button class="btn" onclick="update('${s.id}', 1)">+</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById(cats[s.cat]).innerHTML += html;
+        });
+        calcular();
+    }
+
+    function update(id, cambio) {
+        carrito[id] = (carrito[id] || 0) + cambio;
+        if (carrito[id] < 0) carrito[id] = 0;
+        render();
+    }
+
+    function calcular() {
+        let total = 0;
+        servicios.forEach(s => {
+            total += (carrito[s.id] || 0) * s.precio;
+        });
+        document.getElementById('total').innerText = '$' + total.toFixed(2);
+    }
+
+    render();
+</script>
+
+</body>
+</html>
