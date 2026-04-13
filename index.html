@@ -100,7 +100,10 @@
 
     <h3>🎨 Diseño e Impresión</h3>
     <div id="otros-list"></div>
-
+    
+<h3>👦🏻 Día del Niño</h3>
+        <div id="nino-list"></div>
+    
     <h3>✨ Extras</h3>
     <div id="extras-list"></div>
 <div style="margin-bottom: 15px; padding: 10px; background: #fff5f7; border: 1px solid var(--rosa-pastel); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
@@ -148,12 +151,15 @@
         { id: 'e2', cat: 'extras', nom: 'Empaque Especial', precio: 7.50 },
         { id: 'e3', cat: 'extras', nom: 'Merma', precio: 2.50 },
         { id: 'e4', cat: 'extras', nom: 'Desgaste', precio: 2.50 }
+        // Día del Niño
+    { id: 'dn1', cat: 'nino', nom: 'Play-Doh 1oz', precio: 25.00 },
+    { id: 'dn2', cat: 'nino', nom: 'Crayolas', precio: 3.00 }
     ];
 
     let carrito = {};
 
     function render() {
-        const cats = { cortes: 'cortes-list', hojas: 'hojas-list', otros: 'otros-list', extras: 'extras-list' };
+const cats = { cortes: 'cortes-list', hojas: 'hojas-list', otros: 'otros-list', extras: 'extras-list', nino: 'nino-list' };
         Object.values(cats).forEach(id => document.getElementById(id).innerHTML = '');
 
         servicios.forEach(s => {
