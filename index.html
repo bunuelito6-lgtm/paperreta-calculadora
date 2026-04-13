@@ -181,17 +181,26 @@
     }
 
     function calcular() {
-        let total = 0;
-        servicios.forEach(s => {
-            total += (carrito[s.id] || 0) * s.precio;
-        });
+    let subtotal = 0;
     
-    //  ganancia
-    const porcentaje = document.getElementById('porcentaje-ganancia').value || 0;
-    const totalFinal = total * (1 + (porcentaje / 100));
+    // Sumamos los costos
+    servicios.forEach(s => {
+        subtotal += (carrito[s.id] || 0) * s.precio;
+    });
 
-    document.getElementById('total').innerText = '$' + totalFinal.toFixed(2);
+    // Obtenemos el porcentaje (asegurándonos que sea número)
+    const elementoGanancia = document.getElementById('porcentaje-ganancia');
+    const valorGanancia = elementoGanancia ? parseFloat(elementoGanancia.value) : 100;
+    
+    // Hacemos la cuenta final
+    const totalFinal = subtotal * (1 + (valorGanancia / 100));
+
+    // Actualizamos el texto en la página
+    const displayTotal = document.getElementById('total');
+    if (displayTotal) {
+        displayTotal.innerText = '$' + totalFinal.toFixed(2);
     }
+}
 
     function resetear() {
         carrito = {};
