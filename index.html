@@ -118,44 +118,40 @@
             <button class="reset-btn" onclick="resetear()">Limpiar calculadora</button>
         </div>
     </div>
-        const servicios = [
-        // Cortes
-        { id: 'c1', cat: 'cortes', nom: 'Cricut: Sencillo', precio: 4.50 },
-        { id: 'c2', cat: 'cortes', nom: 'Cricut: Intermedio', precio: 10.00 },
-        { id: 'c3', cat: 'cortes', nom: 'Cricut: Detallado', precio: 22.50 },
-        { id: 'c4', cat: 'cortes', nom: 'Guillotina: Simple', precio: 2.50 },
-        { id: 'c5', cat: 'cortes', nom: 'Tijera: Simple', precio: 3.50 },
-        { id: 'c6', cat: 'cortes', nom: 'Tijera: Detalle/Curvas', precio: 8.00 },
-        // Hojas Completas
-        { id: 'h1', cat: 'hojas', nom: 'Hoja Fotográfica', precio: 4.00 },
-        { id: 'h2', cat: 'hojas', nom: 'Hoja Opalina', precio: 2.70 },
-        { id: 'h3', cat: 'hojas', nom: 'Hoja Vinil Imprimible', precio: 5.00 },
-        { id: 'h4_bond', cat: 'hojas', nom: 'Hoja Bond', precio: 0.25 },
-        // MEDIAS HOJAS (Precios / 2)
-        { id: 'hm1', cat: 'hojas', nom: '½ Hoja Fotográfica', precio: 2.00 },
-        { id: 'hm2', cat: 'hojas', nom: '½ Hoja Opalina', precio: 1.35 },
-        { id: 'hm3', cat: 'hojas', nom: '½ Hoja Vinil Imprimible', precio: 2.50 },
-        { id: 'h4', cat: 'hojas', nom: 'Hoja Fotográfica Adhesiva', precio: 3.00 },
-        { id: 'hm4', cat: 'hojas', nom: '½ Hoja Fotográfica Adhesiva', precio: 1.50 },
-        { id: 'hm5_bond', cat: 'hojas', nom: '½ Hoja Bond', precio: 0.13 },
-        // Diseño e Impresión
-        { id: 'd1', cat: 'otros', nom: 'Impresión B/N', precio: 0.104 },
-        { id: 'd2', cat: 'otros', nom: 'Color Ligero', precio: 0.31 },
-        { id: 'd3', cat: 'otros', nom: 'Color Intenso', precio: 0.82 },
-        { id: 'd4', cat: 'otros', nom: 'Diseño: Cambios mín.', precio: 4.00 },
-        { id: 'd5', cat: 'otros', nom: 'Diseño: Ajuste ligero', precio: 7.50 },
-        { id: 'd6', cat: 'otros', nom: 'Diseño desde Cero', precio: 35.00 },
-        { id: 'd7', cat: 'otros', nom: 'Diseño del Cliente', precio: 15.50 },
-        // Extras
-        { id: 'e1', cat: 'extras', nom: 'Empaque Básico', precio: 3.00 },
-        { id: 'e2', cat: 'extras', nom: 'Empaque Especial', precio: 7.50 },
-        { id: 'e3', cat: 'extras', nom: 'Merma', precio: 2.50 },
-        { id: 'e4', cat: 'extras', nom: 'Desgaste', precio: 2.50 }
-        // Día del Niño
-{ id: 'dn1', cat: 'nino', nom: 'Play-Doh 1oz', precio: 25.00 },
-    { id: 'dn2', cat: 'nino', nom: 'Crayolas', precio: 3.00 }
-];
-{ id: 'dn1', cat: 'nino', nom: 'Play-Doh 1oz', precio: 25.00 },
+    <script>
+const servicios = [
+    // Cortes
+    { id: 'c1', cat: 'cortes', nom: 'Cricut: Sencillo', precio: 4.50 },
+    { id: 'c2', cat: 'cortes', nom: 'Cricut: Intermedio', precio: 10.00 },
+    { id: 'c3', cat: 'cortes', nom: 'Cricut: Detallado', precio: 22.50 },
+    { id: 'c4', cat: 'cortes', nom: 'Guillotina: Simple', precio: 2.50 },
+    { id: 'c5', cat: 'cortes', nom: 'Tijera: Simple', precio: 3.50 },
+    { id: 'c6', cat: 'cortes', nom: 'Tijera: Detalle/Curvas', precio: 8.00 },
+    // Hojas Completas
+    { id: 'h1', cat: 'hojas', nom: 'Hoja Fotográfica', precio: 4.00 },
+    { id: 'h2', cat: 'hojas', nom: 'Hoja Opalina', precio: 2.70 },
+    { id: 'h3', cat: 'hojas', nom: 'Hoja Vinil Imprimible', precio: 5.00 },
+    { id: 'h4_bond', cat: 'hojas', nom: 'Hoja Bond', precio: 0.25 },
+    // MEDIAS HOJAS
+    { id: 'hm1', cat: 'hojas', nom: '½ Hoja Fotográfica', precio: 2.00 },
+    { id: 'hm2', cat: 'hojas', nom: '½ Hoja Opalina', precio: 1.35 },
+    { id: 'hm3', cat: 'hojas', nom: '½ Hoja Vinil Imprimible', precio: 2.50 },
+    { id: 'hm4', cat: 'hojas', nom: '½ Hoja Fotográfica Adhesiva', precio: 1.50 },
+    { id: 'hm5_bond', cat: 'hojas', nom: '½ Hoja Bond', precio: 0.13 },
+    // Diseño e Impresión
+    { id: 'd1', cat: 'otros', nom: 'Impresión B/N', precio: 0.10 },
+    { id: 'd2', cat: 'otros', nom: 'Color Ligero', precio: 0.31 },
+    { id: 'd3', cat: 'otros', nom: 'Color Intenso', precio: 0.82 },
+    { id: 'd4', cat: 'otros', nom: 'Diseño: Cambios mín.', precio: 4.00 },
+    { id: 'd5', cat: 'otros', nom: 'Diseño: Ajuste ligero', precio: 7.50 },
+    { id: 'd7', cat: 'otros', nom: 'Diseño del Cliente', precio: 15.50 },
+    // Extras
+    { id: 'e1', cat: 'extras', nom: 'Empaque Básico', precio: 3.00 },
+    { id: 'e2', cat: 'extras', nom: 'Empaque Especial', precio: 7.50 },
+    { id: 'e3', cat: 'extras', nom: 'Merma', precio: 2.50 },
+    { id: 'e4', cat: 'extras', nom: 'Desgaste', precio: 2.50 },
+    // Día del Niño
+    { id: 'dn1', cat: 'nino', nom: 'Play-Doh 1oz', precio: 25.00 },
     { id: 'dn2', cat: 'nino', nom: 'Crayolas', precio: 3.00 }
 ];
 
@@ -176,36 +172,38 @@ function render() {
     });
 
     servicios.forEach(s => {
-        const btn = document.createElement('button');
-        btn.className = `service-btn ${carrito[s.id] ? 'active' : ''}`;
-        btn.innerHTML = `${s.nom} <br> <span>$${s.precio.toFixed(2)}</span>`;
-        btn.onclick = () => toggleServicio(s.id);
-        
+        const qty = carrito[s.id] || 0;
+        const html = `
+            <div class="item-row">
+                <div class="item-info">
+                    ${s.nom} <br>
+                    <span class="item-price">$${s.precio.toFixed(2)}</span>
+                </div>
+                <div class="controls">
+                    <button class="btn" onclick="update('${s.id}', -1)">-</button>
+                    <span class="count">${qty}</span>
+                    <button class="btn" onclick="update('${s.id}', 1)">+</button>
+                </div>
+            </div>`;
         const container = document.getElementById(cats[s.cat]);
-        if (container) container.appendChild(btn);
+        if (container) container.innerHTML += html;
     });
-
     calcular();
 }
 
-function toggleServicio(id) {
-    if (carrito[id]) {
-        delete carrito[id];
-    } else {
-        carrito[id] = true;
-    }
+function update(id, cambio) {
+    carrito[id] = (carrito[id] || 0) + cambio;
+    if (carrito[id] < 0) carrito[id] = 0;
     render();
 }
 
 function calcular() {
     let subtotal = 0;
     servicios.forEach(s => {
-        if (carrito[s.id]) subtotal += s.precio;
+        subtotal += (carrito[s.id] || 0) * s.precio;
     });
-
     const porc = parseFloat(document.getElementById('porcentaje-ganancia').value) || 0;
     const total = subtotal * (1 + porc / 100);
-    
     document.getElementById('total').innerText = `$${total.toFixed(2)}`;
 }
 
@@ -218,3 +216,4 @@ render();
 </script>
 </body>
 </html>
+   
