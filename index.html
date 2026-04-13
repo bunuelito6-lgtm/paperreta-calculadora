@@ -164,63 +164,63 @@
 let carrito = {};
 
 function render() {
- const cats = { cortes: 'cortes-list', hojas: 'hojas-list', otros: 'otros-list', extras: 'extras-list', nino: 'nino-list' };
-        servicios.forEach(s => {
-            const qty = carrito[s.id] || 0;
-            const html = `
-                <div class="item-row">
-                    <div class="item-info">
-                        ${s.nom} <br>
-                        <span class="item-price">$${s.precio.toFixed(2)}</span>
-                    </div>
-                    <div class="controls">
-                        <button class="btn" onclick="update('${s.id}', -1)">-</button>
-                        <span class="count">${qty}</span>
-                        <button class="btn" onclick="update('${s.id}', 1)">+</button>
-                    </div>
-                </div>
-            `;
-            document.getElementById(cats[s.cat]).innerHTML += html;
-        });
-        calcular();
-    }
+    // Este es el mapa que le dice a cada producto a qué sección ir
+    const cats = { 
+        cortes: 'cortes-list', 
+        hojas: 'hojas-list', 
+        otros: 'otros-list', 
+        extras: 'extras-list', 
+        nino: 'nino-list' 
+    };
 
-    function update(id, cambio) {
-        carrito[id] = (carrito[id] || 0) + cambio;
-        if (carrito[id] < 0) carrito[id] = 0;
-        render();
-    }
-
-    function calcular() {
-    let subtotal = 0;
-    
-    // Sumamos los costos
-    servicios.forEach(s => {
-        subtotal += (carrito[s.id] || 0) * s.precio;
+    // Limpiamos las secciones antes de dibujar
+    Object.values(cats).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '';
     });
 
-    // Obtenemos el porcentaje (asegurándonos que sea número)
-    const elementoGanancia = document.getElementById('porcentaje-ganancia');
-    const valorGanancia = elementoGanancia ? parseFloat(elementoGanancia.value) : 100;
-    
-    // Hacemos la cuenta final
-    const totalFinal = subtotal * (1 + (valorGanancia / 100));
+    // Dibujamos los botones de cada producto
+    servicios.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = `service-btn ${carrito[s.id] ? 'active' : ''}`;
+        btn.innerHTML = `${s.nom} <br> <span>$${s.precio.toFixed(2)}</span>`;
+        btn.onclick = () => toggleServicio(s.id);
+        
+        const container = document.getElementById(cats[s.cat]);
+        if (container) container.appendChild(btn);
+    });
 
-    // Actualizamos el texto en la página
-    const displayTotal = document.getElementById('total');
-    if (displayTotal) {
-        displayTotal.innerText = '$' + totalFinal.toFixed(2);
-    }
+    calcular();
 }
 
-    function resetear() {
-        carrito = {};
-        render();
+function toggleServicio(id) {
+    if (carrito[id]) {
+        delete carrito[id];
+    } else {
+        carrito[id] = true;
     }
-
     render();
-</script>
+}
 
+function calcular() {
+    let subtotal = 0;
+    servicios.forEach(s => {
+        if (carrito[s.id]) subtotal += s.precio;
+    });
+
+    const porc = parseFloat(document.getElementById('porcentaje-ganancia').value) || 0;
+    const total = subtotal * (1 + porc / 100);
+    
+    document.getElementById('total').innerText = `$${total.toFixed(2)}`;
+}
+
+function resetear() {
+    carrito = {};
+    render();
+}
+
+// Arrancamos la calculadora al cargar la página
+render();
+</script>
 </body>
 </html>
-
