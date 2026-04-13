@@ -157,13 +157,14 @@
 { id: 'dn1', cat: 'nino', nom: 'Play-Doh 1oz', precio: 25.00 },
     { id: 'dn2', cat: 'nino', nom: 'Crayolas', precio: 3.00 }
 ];
+{ id: 'dn1', cat: 'nino', nom: 'Play-Doh 1oz', precio: 25.00 },
+    { id: 'dn2', cat: 'nino', nom: 'Crayolas', precio: 3.00 }
+];
 
-    let carrito = {};
+let carrito = {};
 
-    function render() {
-const cats = { cortes: 'cortes-list', hojas: 'hojas-list', otros: 'otros-list', extras: 'extras-list', nino: 'nino-list' };
-        Object.values(cats).forEach(id => document.getElementById(id).innerHTML = '');
-
+function render() {
+ const cats = { cortes: 'cortes-list', hojas: 'hojas-list', otros: 'otros-list', extras: 'extras-list', nino: 'nino-list' };
         servicios.forEach(s => {
             const qty = carrito[s.id] || 0;
             const html = `
