@@ -118,8 +118,6 @@
             <button class="reset-btn" onclick="resetear()">Limpiar calculadora</button>
         </div>
     </div>
-
-    <script>
         const servicios = [
         // Cortes
         { id: 'c1', cat: 'cortes', nom: 'Cricut: Sencillo', precio: 4.50 },
@@ -164,7 +162,6 @@
 let carrito = {};
 
 function render() {
-    // Este es el mapa que le dice a cada producto a qué sección ir
     const cats = { 
         cortes: 'cortes-list', 
         hojas: 'hojas-list', 
@@ -173,13 +170,11 @@ function render() {
         nino: 'nino-list' 
     };
 
-    // Limpiamos las secciones antes de dibujar
     Object.values(cats).forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = '';
     });
 
-    // Dibujamos los botones de cada producto
     servicios.forEach(s => {
         const btn = document.createElement('button');
         btn.className = `service-btn ${carrito[s.id] ? 'active' : ''}`;
@@ -219,7 +214,6 @@ function resetear() {
     render();
 }
 
-// Arrancamos la calculadora al cargar la página
 render();
 </script>
 </body>
